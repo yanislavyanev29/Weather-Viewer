@@ -1,0 +1,29 @@
+# --- .NET ---
+bin/
+obj/
+*.user
+*.suo
+*.rsuser
+*.ide
+*.db
+*.log
+App_Data/
+Properties/launchSettings.json
+appsettings.*.local.json
+appsettings.Secret.json
+
+# --- Node / React ---
+node_modules/
+dist/
+build/
+.vite/
+.cache/
+*.env
+*.env.*
+
+# OS / Editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
