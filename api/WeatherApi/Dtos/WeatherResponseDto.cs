@@ -1,6 +1,7 @@
 
 // can be struct
 using System.Diagnostics.Eventing.Reader;
+namespace WeatherApi.Dtos;
 /// <summary>
 /// Simplified DTO returned to the frontend application.
 /// Contains only the essential weather information.

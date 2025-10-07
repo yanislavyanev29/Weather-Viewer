@@ -1,4 +1,4 @@
-
+namespace WeatherApi.Options;
 /// <summary>
 /// Typed configuration for OpenWeather settings (bound from appsettings / secrets).
 /// </summary>
