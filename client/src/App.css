@@ -40,3 +40,41 @@
 .read-the-docs {
   color: #888;
 }
+/* General layout */
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* Header */
+.app-header {
+  background-color: #1e40af; /* dark blue */
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Main content (map + panel) */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Footer */
+.app-footer {
+  background-color: #e5e7eb;
+  color: #374151;
+  font-size: 12px;
+  text-align: center;
+  padding: 6px 0;
+  border-top: 1px solid #d1d5db;
+}
