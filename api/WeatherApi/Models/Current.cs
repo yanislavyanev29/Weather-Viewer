@@ -8,12 +8,12 @@ namespace WeatherApi.Models;
 public  class Current
 {
    [JsonPropertyName("temp")]
-    public double Temperature { get; set; }
+    public double Temp { get; set; }
 
      [JsonPropertyName("humidity")]
     public int Humidity { get; set; }
      
-     [JsonPropertyName("wind-speed")]
+     [JsonPropertyName("wind_speed")]
     public double WindSpeed { get; set; }
       
     [JsonPropertyName("weather")]

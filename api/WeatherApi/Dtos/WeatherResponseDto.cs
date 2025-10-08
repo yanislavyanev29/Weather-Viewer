@@ -6,7 +6,7 @@ namespace WeatherApi.Dtos;
 /// Simplified DTO returned to the frontend application.
 /// Contains only the essential weather information.
 /// </summary>
-public  readonly  record struct WeatheResponseDto
+public  readonly  record struct WeatherResponseDto
 (
     double Temperature,
     string Description,

@@ -11,7 +11,7 @@ public  class WeatherItem
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-     [JsonPropertyName("Icon")]
+     [JsonPropertyName("icon")]
     public string? Icon { get; set; }
     
 }

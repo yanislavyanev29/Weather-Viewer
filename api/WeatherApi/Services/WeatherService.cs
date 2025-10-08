@@ -24,11 +24,13 @@ public class WeatherService : IWeatherService
         _http = factory.CreateClient("owm");
         _options = options.Value;
     }
-    public async Task<WeatheResponseDto> GetCurrentAsync(double lat, double lon)
+    public async Task<WeatherResponseDto> GetCurrentAsync(double lat, double lon)
     {
-        // get this url adress from OpenWeather One Call API 3.0
-        var url = $"data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily,alerts&appid={_options.ApiKey}&units=metric";
-
+        if (string.IsNullOrWhiteSpace(_options.ApiKey))
+    throw new UpstreamException("Missing OpenWeather API key.", 500);
+        // get this url address from OpenWeather One Call API 3.0
+        var url = $"data/2.5/weather?lat={lat}&lon={lon}&appid={_options.ApiKey}&units=metric";
+                       Console.WriteLine($"Using API key: {_options.ApiKey}");
         var response = await _http.GetAsync(url);
 
         if (!response.IsSuccessStatusCode)
@@ -44,9 +46,9 @@ public class WeatherService : IWeatherService
 
         var weather = data.Current.Weather?.FirstOrDefault();
 
-        return new WeatheResponseDto
+        return new WeatherResponseDto
         {
-            Temperature = data.Current.Temperature,
+            Temperature = data.Current.Temp,
             Description = weather?.Description ?? "Unknown",
             Icon = weather?.Icon ?? "",
             Humidity = data.Current.Humidity,
