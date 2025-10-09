@@ -4,7 +4,36 @@
   padding: 2rem;
   text-align: center;
 }
+:root {
+  --bg-color: #f5f5f5;
+  --text-color: #222;
+  --panel-bg: #fff;
+  --panel-border: #ddd;
+  --accent-color: #0078ff;
+}
 
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --panel-bg: #1f1f1f;
+  --panel-border: #333;
+  --accent-color: #3399ff;
+}
+
+button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

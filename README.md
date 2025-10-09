@@ -8,3 +8,24 @@ Full-stack demo project built with **.NET 8 Web API** and **React (Leaflet)**, r
 
 ## Goal
 Visualize live weather data on an interactive map using the OpenWeather API.
+🚀 Features
+
+.NET 8 Web API
+
+GET /weather?lat={lat}&lon={lon} endpoint
+
+Returns simplified JSON: temperature, description, icon, humidity, wind speed, timezone
+
+Includes validation, exception handling middleware, and CORS setup
+
+Uses OpenWeather One Call 3.0 (or fallback Current Weather API)
+
+React (Vite) Frontend
+
+Interactive map using Leaflet + OpenStreetMap
+
+On load: detects browser geolocation (fallback to Sofia, BG)
+
+On marker drag/click: fetches new data from API
+
+Displays weather info panel with temperature, description, and icons
