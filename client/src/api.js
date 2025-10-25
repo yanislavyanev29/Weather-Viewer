@@ -4,6 +4,7 @@ export async function fetchWeather(lat, lon, signal) {
   const res = await fetch(`${BASE_URL}/weather?lat=${lat}&lon=${lon}`, { signal });
   if (!res.ok) {
     let msg = `HTTP ${res.status}`;
+    console.log("Sending Request");
     try {
       const data = await res.json();
       if (data?.error?.message) msg = data.error.message;

@@ -1,41 +1,13 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import { fetchWeather } from "../api";
 import "./MapPicker.css"; 
+import DraggableMarker from "./DraggableMarker";
+import useDebouncedCallback from "../hooks/useDebouncedCallback";
 
-const icon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
 
-function DraggableMarker({ pos, onChange }) {
-  const [position, setPosition] = useState(pos);
 
-  useMapEvents({
-    click(e) {
-      setPosition(e.latlng);
-      onChange(e.latlng);
-    },
-  });
-
-  return (
-    <Marker
-      icon={icon}
-      draggable
-      eventHandlers={{
-        dragend: (e) => {
-          const ll = e.target.getLatLng();
-          setPosition(ll);
-          onChange(ll);
-        },
-      }}
-      position={position}
-    />
-  );
-}
 
 export default function MapPicker() {
   const [center, setCenter] = useState({ lat: 42.6977, lng: 23.3219 }); // София fallback
@@ -56,14 +28,16 @@ export default function MapPicker() {
     setErr("");
     setData(null);
     try {
-      const w = await fetchWeather(latlng.lat, latlng.lng);
-      setData(w);
+      const weather = await fetchWeather(latlng.lat, latlng.lng);
+
+      setData(weather);
     } catch (e) {
       setErr(e.message);
     } finally {
       setLoading(false);
     }
   }
+    const fetchForDebounced = useDebouncedCallback(fetchFor, 600)
 
   useEffect(() => {
     fetchFor(center);
@@ -78,7 +52,7 @@ export default function MapPicker() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; OpenStreetMap contributors"
           />
-          <DraggableMarker pos={center} onChange={fetchFor} />
+          <DraggableMarker pos={center} onChange={fetchForDebounced} />
         </MapContainer>
       </div>
 
