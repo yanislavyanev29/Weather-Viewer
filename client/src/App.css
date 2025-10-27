@@ -1,109 +1,20 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-:root {
-  --bg-color: #f5f5f5;
-  --text-color: #222;
-  --panel-bg: #fff;
-  --panel-border: #ddd;
-  --accent-color: #0078ff;
-}
+/* Global reset + full-height scaffold */
+* { box-sizing: border-box; }
+html, body, #root, .app-root { height: 100%; margin: 0; }
+:root { color-scheme: light dark; }
 
-[data-theme='dark'] {
-  --bg-color: #121212;
-  --text-color: #f5f5f5;
-  --panel-bg: #1f1f1f;
-  --panel-border: #333;
-  --accent-color: #3399ff;
-}
+/* Simple theme (toggle sets .dark on <html>) */
+.dark body { background:#0b1220; color:#e5e7eb; }
 
-button {
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-/* General layout */
-.app-container {
-  height: 100vh;
-  width: 100vw;
+.app-root {
   display: flex;
   flex-direction: column;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background-color: #f9fafb;
-  color: #111827;
 }
 
-/* Header */
-.app-header {
-  background-color: #1e40af; /* dark blue */
-  color: white;
-  font-size: 18px;
-  font-weight: 500;
-  padding: 10px 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Main content (map + panel) */
 .app-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Footer */
-.app-footer {
-  background-color: #e5e7eb;
-  color: #374151;
-  font-size: 12px;
-  text-align: center;
-  padding: 6px 0;
-  border-top: 1px solid #d1d5db;
+  flex: 1;                /* take remaining height below header */
+  min-height: 0;          /* Firefox fix */
+  display: flex;    
+  width: 100%;
+  background: radial-gradient(1200px 600px at 50% 100%, rgba(37,99,235,.08), transparent);
 }

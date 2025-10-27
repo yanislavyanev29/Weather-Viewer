@@ -1,0 +1,41 @@
+/* simple non-fixed header (стабиилен, после може да стане fixed) */
+.app-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 10px 16px;
+  background: linear-gradient(180deg,#1d4ed8,#2563eb);
+  color:#fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+
+.brand { display:flex; align-items:center; gap:10px; }
+.brand .logo { font-size: 18px; }
+.brand h1 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: .2px; }
+
+.actions { display:flex; align-items:center; gap:12px; }
+
+.unit-toggle {
+  display:inline-flex; gap:4px; padding:3px;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter: blur(6px);
+}
+.unit-toggle button{
+  appearance:none; border:0; background:transparent; color:#fff;
+  padding:4px 10px; border-radius:8px; font-weight:700; cursor:pointer;
+}
+.unit-toggle button.active{ background:rgba(255,255,255,.92); color:#0f172a; }
+
+.theme-toggle{ position:relative; width:44px; height:24px; display:inline-block; }
+.theme-toggle input{ display:none; }
+.theme-toggle .slider{
+  position:absolute; inset:0; border-radius:999px;
+  background:rgba(255,255,255,.35); transition:.2s ease;
+}
+.theme-toggle .slider::after{
+  content:""; position:absolute; left:3px; top:3px;
+  width:18px; height:18px; border-radius:50%;
+  background:#fff; transition:.2s ease;
+}
+.theme-toggle input:checked + .slider{ background:rgba(255,255,255,.6); }
+.theme-toggle input:checked + .slider::after{ transform: translateX(20px); }

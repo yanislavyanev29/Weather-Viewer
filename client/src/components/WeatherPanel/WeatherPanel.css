@@ -1,0 +1,112 @@
+:root {
+    --fg: #0f172a;
+    --border: rgba(0, 0, 0, .08);
+    --card: rgba(255, 255, 255, .55);
+    --panel: rgba(255, 255, 255, .7);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fg: #e5e7eb;
+        --border: rgba(255, 255, 255, .12);
+        --card: rgba(15, 23, 42, .45);
+        --panel: rgba(17, 24, 39, .6);
+    }
+}
+
+.weather-panel {
+    color: var(--fg);
+    padding: 16px;
+    background: var(--panel);
+    backdrop-filter: blur(8px) saturate(130%);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    overflow: auto;
+}
+
+.wp-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    background: var(--card);
+    backdrop-filter: blur(4px);
+}
+
+.wp-temp {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.wp-temp .value {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.wp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-top: 8px;
+}
+
+.wp-item strong {
+    font-weight: 700;
+}
+
+.hint {
+    opacity: .7;
+}
+
+.wp-card.error {
+    border-color: rgba(239, 68, 68, .35);
+    background: rgba(239, 68, 68, .08);
+}
+
+.wp-btn {
+    border: 1px solid var(--border);
+    background: #2563eb;
+    color: #fff;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* skeleton */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+}
+
+.sk-line {
+    height: 12px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, .06), rgba(0, 0, 0, .1), rgba(0, 0, 0, .06));
+    animation: shimmer 1.2s infinite linear;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+.sk-line.big {
+    height: 36px;
+    width: 60%;
+}
+
+.sk-line.short {
+    width: 40%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+
+    100% {
+        background-position: 200px 0;
+    }
+}

@@ -1,25 +1,23 @@
-import React from "react";
-import MapPicker from "./components/MapPicker.jsx";
+// App.jsx
+import { useState ,useEffect} from "react";
+import HeaderBar from "./components/HeaderBar/HeaderBar";
+import MapPicker from "./components/MapPicker";
 import "./App.css";
 
-/**
- * Main application component.
- * Contains the header, map section, and footer.
- */
 export default function App() {
+  const [unit, setUnit] = useState("C");
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
+
   return (
-    <div className="app-container">
-      <header className="app-header">
-        🌤️ Weather Viewer
-      </header>
-
+    <div id="app" className="app-root">
+      <HeaderBar unit={unit} setUnit={setUnit} dark={dark} setDark={setDark} />
       <main className="app-main">
-        <MapPicker />
+        <MapPicker unit={unit} />
       </main>
-
-      <footer className="app-footer">
-        Built with React + Leaflet + OpenWeather API
-      </footer>
     </div>
   );
 }

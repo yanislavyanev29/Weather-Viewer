@@ -1,51 +1,43 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { fetchWeather } from "../api";
-import "./MapPicker.css"; 
+import { fetchWeather } from "../api";        // adjust path if needed
 import DraggableMarker from "./DraggableMarker";
 import useDebouncedCallback from "../hooks/useDebouncedCallback";
+import WeatherPanel from "./WeatherPanel/WeatherPanel";
+import LocateButton from "./LocateButton/LocateButton";
+import "./MapPicker.css";
 
-
-
-
-export default function MapPicker() {
-  const [center, setCenter] = useState({ lat: 42.6977, lng: 23.3219 }); // София fallback
+export default function MapPicker({ unit }) {
+  const [center, setCenter] = useState({ lat: 42.6977, lng: 23.3219 });
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState("");
+  const [error, setError] = useState("");
   const [data, setData] = useState(null);
 
-  // Get the geolocation
+  // initial geolocation
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (p) => setCenter({ lat: p.coords.latitude, lng: p.coords.longitude }),
-      () => {} // default in Sofia
+      () => {}
     );
   }, []);
 
   async function fetchFor(latlng) {
-    setLoading(true);
-    setErr("");
-    setData(null);
-    try {
-      const weather = await fetchWeather(latlng.lat, latlng.lng);
-
-      setData(weather);
-    } catch (e) {
-      setErr(e.message);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true); setError(""); setData(null);
+    try { setData(await fetchWeather(latlng.lat, latlng.lng)); }
+    catch (e) { setError(e.message || "Failed to load weather."); }
+    finally { setLoading(false); }
   }
-    const fetchForDebounced = useDebouncedCallback(fetchFor, 600)
 
-  useEffect(() => {
-    fetchFor(center);
-  }, [center.lat, center.lng]);
+  const fetchForDebounced = useDebouncedCallback(fetchFor, 500);
+
+  // load for initial/geo center (no debounce)
+  useEffect(() => { fetchFor(center); }, [center.lat, center.lng]);
+
+  const handleRetry = () => fetchFor(center);
 
   return (
     <div className="map-layout">
-      {/* Left side of the map */}
       <div className="map-container">
         <MapContainer center={center} zoom={10} style={{ height: "100%", width: "100%" }}>
           <TileLayer
@@ -53,31 +45,17 @@ export default function MapPicker() {
             attribution="&copy; OpenStreetMap contributors"
           />
           <DraggableMarker pos={center} onChange={fetchForDebounced} />
+          <LocateButton onLocate={(ll) => { setCenter(ll); fetchFor(ll); }} />
         </MapContainer>
       </div>
 
-      {/* right side information */}
-      <aside className="weather-panel">
-        <h2>Current Weather</h2>
-        {loading && <p className="status loading">Loading...</p>}
-        {err && <p className="status error">{err}</p>}
-        {data && (
-          <div className="weather-data">
-            <div className="temp">
-              <img
-                alt={data.description}
-                src={`https://openweathermap.org/img/wn/${data.icon}@2x.png`}
-              />
-              <span>{Math.round(data.temperature)}°C</span>
-            </div>
-            <p className="desc">{data.description}</p>
-            <p>💧 Humidity: {data.humidity}%</p>
-            <p>💨 Wind: {data.windSpeed} m/s</p>
-            <p>🕓 {data.timezone}</p>
-          </div>
-        )}
-        <small className="hint">Drag the marker or click anywhere on the map.</small>
-      </aside>
+      <WeatherPanel
+        data={data}
+        loading={loading}
+        error={error}
+        onRetry={handleRetry}
+        unit={unit}
+      />
     </div>
   );
 }
