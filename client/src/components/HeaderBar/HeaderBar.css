@@ -1,41 +1,43 @@
-/* simple non-fixed header (стабиилен, после може да стане fixed) */
-.app-bar{
-  display:flex; align-items:center; justify-content:space-between;
-  padding: 10px 16px;
-  background: linear-gradient(180deg,#1d4ed8,#2563eb);
-  color:#fff;
-  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+.hb-root{
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(90deg, rgba(30,58,138,.9), rgba(37,99,235,.85));
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
-.brand { display:flex; align-items:center; gap:10px; }
-.brand .logo { font-size: 18px; }
-.brand h1 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: .2px; }
+.hb-inner{
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 .9rem;
+  color: #f8fafc;
+}
 
-.actions { display:flex; align-items:center; gap:12px; }
+/* Left */
+.hb-left{ display: flex; align-items: center; gap: .6rem; }
+.hb-logo{ font-size: 1rem; filter: drop-shadow(0 1px 4px rgba(0,0,0,.35)); }
+.hb-title{ font-weight: 700; letter-spacing: .3px; }
 
-.unit-toggle {
-  display:inline-flex; gap:4px; padding:3px;
-  border:1px solid rgba(255,255,255,.35);
-  border-radius:12px;
-  background:rgba(255,255,255,.15);
-  backdrop-filter: blur(6px);
-}
-.unit-toggle button{
-  appearance:none; border:0; background:transparent; color:#fff;
-  padding:4px 10px; border-radius:8px; font-weight:700; cursor:pointer;
-}
-.unit-toggle button.active{ background:rgba(255,255,255,.92); color:#0f172a; }
+/* Right controls */
+.hb-right{ display: flex; align-items: center; gap: .5rem; }
 
-.theme-toggle{ position:relative; width:44px; height:24px; display:inline-block; }
-.theme-toggle input{ display:none; }
-.theme-toggle .slider{
-  position:absolute; inset:0; border-radius:999px;
-  background:rgba(255,255,255,.35); transition:.2s ease;
+/* Segmented control */
+.hb-segment{
+  display: inline-flex; border-radius: 10px; overflow: hidden;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
 }
-.theme-toggle .slider::after{
-  content:""; position:absolute; left:3px; top:3px;
-  width:18px; height:18px; border-radius:50%;
-  background:#fff; transition:.2s ease;
+.hb-seg{
+  padding: .32rem .6rem; color: #e5e7eb; background: transparent; border: none; cursor: pointer;
+  font-weight: 600;
 }
-.theme-toggle input:checked + .slider{ background:rgba(255,255,255,.6); }
-.theme-toggle input:checked + .slider::after{ transform: translateX(20px); }
+.hb-seg:hover{ background: rgba(255,255,255,.08); }
+.hb-seg.is-active{ background: #1d4ed8; color: #fff; }
+
+/* Icon buttons */
+.hb-icon-btn{
+  display: inline-grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.1); color: #e5e7eb; cursor: pointer;
+}
+.hb-icon-btn:hover{ filter: brightness(1.05); }
+

@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using WeatherApi.CustomExceptions;
 using WeatherApi.Dtos;
 using WeatherApi.Services;
-using System.Linq;
 namespace WeatherApi.Controllers;
 
 /// <summary>

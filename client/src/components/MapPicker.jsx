@@ -18,7 +18,7 @@ export default function MapPicker({ unit }) {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (p) => setCenter({ lat: p.coords.latitude, lng: p.coords.longitude }),
-      () => {}
+      () => { }
     );
   }, []);
 

@@ -1,38 +1,36 @@
-/* Две колони: карта (ляво) + панел (дясно) */
+
 .map-layout{
   
-  flex: 1;                 /* да запълни височината на .app-main */
-  min-height: 0;           /* важно за Firefox */
+  flex: 1;                
+  min-height: 0;         
   display: grid;
-  grid-template-columns: minmax(0,1fr) 360px;  /* лявата колона да може да се свива/растяга */
+  grid-template-columns: minmax(0,1fr) 360px;  
   width: 100%;
 }
 
-/* Лявата колона с картата */
+
 .map-container{
-  min-width: 0;            /* да не тласка панела */
-  min-height: 0;           /* да позволи 100% височина на децата */
-  display: grid;           /* позволява на детето да е 100%/100% */
+  min-width: 0;            
+  min-height: 0;           
+  display: grid;           
 }
 
-/* Leaflet да запълва родителя си (без absolute) */
+
 .leaflet-container{
   width: 100%;
   height: 100%;
 }
 
-/* Панелът вдясно – ширината идва от grid-template-columns */
-.weather-panel{
-  /* няма нужда от допълнителни ширини тук */
-}
 
-/* Мобилно: панелът пада отдолу, с видима карта */
+
+
+
 @media (max-width: 900px){
   .map-layout{
     grid-template-columns: 1fr;
-    grid-auto-rows: auto;      /* карта отгоре, панел отдолу */
+    grid-auto-rows: auto;      
   }
   .map-container{
-    height: 60vh;              /* видима карта на мобилно */
+    height: 60vh;              
   }
 }
