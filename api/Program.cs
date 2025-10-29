@@ -1,15 +1,17 @@
 using WeatherApi.Middleware;
 using WeatherApi.Options;
 using WeatherApi.Services;
-
+using Microsoft.Extensions.Http.Resilience;
 var builder = WebApplication.CreateBuilder(args);
 
 // Load local overrides (for tests/dev)
 builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
 
-// Strongly-typed options: OpenWeather:{ BaseUrl, ApiKey }
-builder.Services.Configure<OpenWeatherOptions>(
-    builder.Configuration.GetSection("OpenWeather"));
+
+builder.Services.AddOptions<OpenWeatherOptions>()
+    .Bind(builder.Configuration.GetSection("OpenWeather"))
+    .Validate(o => !string.IsNullOrWhiteSpace(o.ApiKey), "OpenWeather:ApiKey is required")
+    .ValidateOnStart();
 
 // Named HttpClient for OpenWeather
 builder.Services.AddHttpClient("owm", c =>
@@ -17,7 +19,9 @@ builder.Services.AddHttpClient("owm", c =>
     var baseUrl = builder.Configuration["OpenWeather:BaseUrl"] ?? "https://api.openweathermap.org/";
     c.BaseAddress = new Uri(baseUrl);
     c.Timeout = TimeSpan.FromSeconds(10);
-});
+}) .AddStandardResilienceHandler();
+
+
 
 // CORS – allow only your React app (Vite default)
 var frontendOrigin = builder.Configuration["Frontend:Origin"] ?? "http://localhost:5173";
@@ -40,12 +44,14 @@ builder.WebHost.ConfigureKestrel(o =>
 
 var app = builder.Build();
 
+// Add caching
+app.UseResponseCaching();
 // Global error handler first
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 // CORS
 app.UseCors("client");
-
+//
 // Swagger only in Development
 if (app.Environment.IsDevelopment())
 {

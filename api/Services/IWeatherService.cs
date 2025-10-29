@@ -9,5 +9,5 @@ namespace WeatherApi.Services;
 /// </summary>
 public interface IWeatherService
 {
-    Task<WeatherResponseDto> GetCurrentAsync(double lat, double lon);
+    Task<WeatherResponseDto> GetCurrentAsync(WeatherQuery q,CancellationToken ct);
 }

@@ -1,10 +1,25 @@
 /* Global reset + full-height scaffold */
-* { box-sizing: border-box; }
-html, body, #root, .app-root { height: 100%; margin: 0; }
-:root { color-scheme: light dark; }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.app-root {
+  height: 100%;
+  margin: 0;
+}
+
+:root {
+  color-scheme: light dark;
+}
 
 /* Simple theme (toggle sets .dark on <html>) */
-.dark body { background:#0b1220; color:#e5e7eb; }
+.dark body {
+  background: #0b1220;
+  color: #e5e7eb;
+}
 
 .app-root {
   display: flex;
@@ -12,9 +27,11 @@ html, body, #root, .app-root { height: 100%; margin: 0; }
 }
 
 .app-main {
-  flex: 1;                /* take remaining height below header */
-  min-height: 0;          /* Firefox fix */
-  display: flex;    
+  flex: 1;
+  /* take remaining height below header */
+  min-height: 0;
+  /* Firefox fix */
+  display: flex;
   width: 100%;
-  background: radial-gradient(1200px 600px at 50% 100%, rgba(37,99,235,.08), transparent);
+  background: radial-gradient(1200px 600px at 50% 100%, rgba(37, 99, 235, .08), transparent);
 }

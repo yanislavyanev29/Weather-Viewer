@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WeatherApi.CustomExceptions;
+using WeatherApi.Dtos;
 using WeatherApi.Services;
-
+using System.Linq;
 namespace WeatherApi.Controllers;
 
 /// <summary>
@@ -11,21 +12,23 @@ namespace WeatherApi.Controllers;
 [Route("[controller]")]
 public class WeatherController : ControllerBase
 {
-    private readonly IWeatherService _svc;
-    public WeatherController(IWeatherService svc) => _svc = svc;
+    private readonly IWeatherService _weatherService;
+    public WeatherController(IWeatherService weatherService) => _weatherService = weatherService;
 
     // GET /weather?lat={lat}&lon={lon}
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] double lat, [FromQuery] double lon)
+    public async Task<IActionResult> Get([FromQuery]  WeatherQuery q,CancellationToken ct )
     {
-        // Validate coordinates
-        if (lat is < -90 or > 90)
-            throw new ApiException("Latitude must be in range [-90, 90].", 400);
+         if (!ModelState.IsValid)
+        {
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .Select(x => new { field = x.Key, error = x.Value?.Errors.First().ErrorMessage });
 
-        if (lon is < -180 or > 180)
-            throw new ApiException("Longitude must be in range [-180, 180].", 400);
+            return BadRequest(new { message = "Invalid request", details = errors });
+        }
 
-        var dto = await _svc.GetCurrentAsync(lat, lon);
+        var dto = await _weatherService.GetCurrentAsync(q,ct);
         return Ok(dto);
     }
 }

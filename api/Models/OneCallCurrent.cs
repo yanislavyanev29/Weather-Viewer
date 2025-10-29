@@ -13,5 +13,6 @@ public  class OneCallCurrent
     
     [JsonPropertyName("current")]
     public Current? Current { get; set; }
-    public string? Weather { get; internal set; }
+
+   
 }
