@@ -8,7 +8,7 @@ function formatTemp(value, unit) {
     : `${Math.round(value)}°C`;
 }
 
-// 🕒 функция за време в timezone
+
 function getTimeInZone(tz) {
   try {
     const now = new Date();
@@ -70,6 +70,7 @@ export default function WeatherPanel({ data, loading, error, onRetry, unit = "C"
         <div className="wp-body">
         
           <div className="wp-time">
+             <span className="wp-timezone">{data.timezone || "—"}</span>
             <span className="wp-clock">{localTime}</span>
           </div>
 

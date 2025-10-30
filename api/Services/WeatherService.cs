@@ -17,7 +17,7 @@ namespace WeatherApi.Services;
 public class WeatherService : IWeatherService
 {
     private const string OneCallPath = "data/3.0/onecall";
-      private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web);
 
     private readonly HttpClient _http;
     private readonly OpenWeatherOptions _options;

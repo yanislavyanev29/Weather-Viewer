@@ -7,6 +7,7 @@ namespace WeatherApi.Controllers;
 /// Handles weather data requests by coordinates.
 /// </summary>
 [ApiController]
+[Route("")]
 [Route("[controller]")]
 public class WeatherController : ControllerBase
 {

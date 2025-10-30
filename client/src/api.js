@@ -1,16 +1,26 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000";
+
+function normCoord(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n)) throw new Error("Invalid coordinates.");
+  return Number(n.toFixed(6)); // стабилен формат с точка
+}
+
+async function fetchJSON(url, opts) {
+  const res = await fetch(url, opts);
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch {}
+  if (!res.ok) {
+    const msg = data?.message || data?.title || text || res.statusText || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return data;
+}
 
 export async function fetchWeather(lat, lon, signal) {
-  const res = await fetch(`${BASE_URL}/weather?lat=${lat}&lon=${lon}`, { signal });
-  if (!res.ok) {
-    let msg = `HTTP ${res.status}`;
-    console.log("Sending Request");
-    try {
-      const data = await res.json();
-      if (data?.error?.message) msg = data.error.message;
-    } catch {
-    throw  new Error(msg);
-    }
-  }
-  return res.json();
+  const la = normCoord(lat);
+  const lo = normCoord(lon);
+  const url = `${BASE_URL}/weather?lat=${la}&lon=${lo}`;
+  return fetchJSON(url, { signal });
 }
